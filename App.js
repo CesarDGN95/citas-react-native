@@ -1,117 +1,78 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, {useState} from 'react';
 
-import React from 'react';
-import type {Node} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
-  View,
+  SafeAreaView,
+  Pressable,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+//MIS COMPONENTES
+import Formulario from './src/components/Formulario';
 
-/* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
- * LTI update could not be added via codemod */
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+// COMPONENTE PRINCIPAL
+const App = () => {
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const [modal, setModal] = useState(false)
+
+  
+  // ABRIR MODAL
+  const nuevaCitaHandler = () => {
+    setModal(true)
+  }
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+    <SafeAreaView style={styles.contenedor}>
+      <Text style={styles.title}>Administrador de Citas {" "}
+        <Text style={styles.tituloBold}>Veterinaria</Text> 
+      </Text>
+
+      <Pressable onPress={nuevaCitaHandler} style={styles.btnNuevaCita}> 
+        <Text style={styles.btnTextNuevaCita}>Nueva Cita</Text>
+      </Pressable>
+
+      {/* MODAL FORMULARIO */}
+      <Formulario modal={modal} setModal={setModal}/>
     </SafeAreaView>
+    
+    
+    
   );
 };
 
+//ESTILOS
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  contenedor: {
+    backgroundColor: "#F3F4F6",
+    flex: 1,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  title: {
+    textAlign: "center",
+    fontSize: 30,
+    color: "#374151",
+    fontWeight: "600",
+    marginTop: 10
   },
-  sectionDescription: {
-    marginTop: 8,
+  tituloBold: {
+    fontWeight: "900",
+    color: "#6D28D9"
+  },
+  btnNuevaCita: {
+    backgroundColor: "#6D28D9",
+    padding: 15,
+    marginTop: 30,
+    marginHorizontal: 20,
+    borderRadius: 10
+  },
+  btnTextNuevaCita: {
+    textAlign: "center",
+    color: "#FFF",
     fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+    fontWeight: "900",
+    textTransform: "uppercase"
+  }
+})
+
 
 export default App;
